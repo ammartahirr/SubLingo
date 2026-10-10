@@ -1,0 +1,43 @@
+{
+  "manifest_version": 3,
+  "name": "Subtitle Lens – Learn Words from Movies",
+  "short_name": "Subtitle Lens",
+  "version": "1.0.0",
+  "description": "Press Ctrl+Q while watching, click any subtitle word and get its meaning, usage, pronunciation and 10 example sentences. Includes a Deep Learning mode for subtitle files.",
+  "permissions": ["storage", "tts"],
+  "host_permissions": [
+    "https://api.dictionaryapi.dev/*",
+    "https://tatoeba.org/*",
+    "https://api.tatoeba.org/*",
+    "https://api.openai.com/*",
+    "https://generativelanguage.googleapis.com/*"
+  ],
+  "optional_host_permissions": ["<all_urls>"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Subtitle Lens – Deep Learning mode",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["shared/lookup-ui.js", "content/content.js"],
+      "all_frames": true,
+      "match_about_blank": true,
+      "run_at": "document_start"
+    }
+  ]
+}

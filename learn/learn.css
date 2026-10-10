@@ -1,0 +1,72 @@
+:root {
+  --bg: #0f1116; --card: #161a22; --line: #262b35; --text: #e9ecf2; --muted: #8b93a7;
+  --accent: #6c8cff; --gold: #ffd27a; --green: #8fe3c8; --red: #ff9a9a;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--bg); color: var(--text);
+  font: 15px/1.6 -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+button { font: inherit; color: inherit; background: #222838; border: 1px solid #343b4b; border-radius: 9px;
+  padding: 6px 12px; cursor: pointer; }
+button:hover { background: #2b3244; }
+button.primary { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
+button.primary:hover { filter: brightness(1.1); }
+button.danger { border-color: #5a2b2b; color: var(--red); }
+input, select { font: inherit; color: var(--text); background: #0f1219; border: 1px solid #343b4b; border-radius: 8px; padding: 7px 10px; }
+input[type="range"] { padding: 0; vertical-align: middle; }
+.muted { color: var(--muted); }
+.small { font-size: 13px; }
+.ok { color: var(--green); } .err { color: var(--red); }
+kbd { background: #222838; border: 1px solid #3a4153; border-bottom-width: 2px; border-radius: 5px; padding: 0 6px; font-size: 13px; }
+
+.top { position: sticky; top: 0; z-index: 5; display: flex; align-items: center; gap: 24px; padding: 10px 24px;
+  background: rgba(15,17,22,.92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 18px; }
+.brand img { width: 30px; height: 30px; }
+nav { display: flex; gap: 6px; flex-wrap: wrap; }
+.tab { background: transparent; border-color: transparent; color: var(--muted); }
+.tab.active { background: #1e2433; border-color: #343b4b; color: var(--text); }
+
+main { max-width: 920px; margin: 0 auto; padding: 24px; }
+.tabpane { display: none; } .tabpane.active { display: block; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 20px 24px; }
+
+.dropzone { border: 2px dashed #3a4153; border-radius: 18px; padding: 60px 20px; text-align: center; cursor: pointer;
+  background: var(--card); transition: .15s; }
+.dropzone.over { border-color: var(--accent); background: #1a2032; }
+.dropzone h2 { margin: 6px 0; }
+.dz-icon { font-size: 46px; }
+
+.toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
+.toolbar .title { font-weight: 700; font-size: 17px; }
+.toolbar .title .muted { font-weight: 400; font-size: 13px; }
+.tools { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.chk { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); font-size: 14px; }
+.hintline { margin: 4px 0 16px; font-size: 14px; }
+
+#text { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 18px 28px; font-size: 18px; line-height: 1.85; }
+#text p { margin: 0 0 18px; }
+#text .time { display: inline-block; font-size: 12px; color: var(--muted); background: #1e2433; border-radius: 6px;
+  padding: 0 7px; margin-right: 10px; vertical-align: 2px; font-variant-numeric: tabular-nums; user-select: none; }
+#text .w { cursor: pointer; border-radius: 4px; padding: 0 1px; transition: background .1s; }
+#text .w:hover { background: rgba(108,140,255,.28); }
+#text .w.seen { text-decoration: underline dotted #6c8cff; text-underline-offset: 4px; }
+#text .w.saved { color: var(--gold); }
+#text .w.active { background: var(--accent); color: #fff; }
+#text .w.found { background: rgba(255,210,122,.35); }
+
+form.card label { display: block; margin: 12px 0; }
+form.card label > input:not([type="checkbox"]):not([type="range"]), form.card select { display: block; width: 100%; margin-top: 4px; }
+form.card label.chk { display: flex; }
+fieldset { border: 1px solid var(--line); border-radius: 10px; margin: 12px 0; padding: 4px 16px; }
+legend { color: var(--muted); padding: 0 6px; }
+.row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 16px; }
+form h2, .help h2 { font-size: 17px; margin: 18px 0 6px; }
+form h2:first-child, .help h2:first-child { margin-top: 0; }
+.help li { margin: 6px 0; }
+
+.wordrow { display: flex; gap: 12px; align-items: flex-start; background: var(--card); border: 1px solid var(--line);
+  border-radius: 12px; padding: 12px 16px; margin-bottom: 10px; }
+.wr-main { flex: 1; }
+.wr-word { font-weight: 700; font-size: 18px; margin-right: 8px; cursor: pointer; color: var(--gold); }
+.wr-act { display: flex; gap: 6px; }
+.wr-act button { padding: 4px 8px; }

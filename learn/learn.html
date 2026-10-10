@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Subtitle Lens – Deep Learning</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="../icons/icon32.png" />
+  <link rel="stylesheet" href="learn.css" />
+</head>
+<body>
+  <header class="top">
+    <div class="brand"><img src="../icons/icon48.png" alt="" /> <span>Subtitle Lens</span></div>
+    <nav>
+      <button class="tab active" data-tab="learn">📖 Deep Learning</button>
+      <button class="tab" data-tab="words">⭐ My Words</button>
+      <button class="tab" data-tab="settings">⚙️ Settings</button>
+      <button class="tab" data-tab="help">❓ How to use</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ============================ DEEP LEARNING ============================ -->
+    <section id="tab-learn" class="tabpane active">
+      <div id="dropzone" class="dropzone">
+        <input id="file" type="file" accept=".srt,.vtt,.ass,.ssa,.sub,.txt" hidden />
+        <div class="dz-icon">🎬</div>
+        <h2>Upload a subtitle file</h2>
+        <p>Drag &amp; drop a <b>.srt</b>, <b>.vtt</b>, <b>.ass/.ssa</b>, <b>.sub</b> or <b>.txt</b> file here, or</p>
+        <button id="pick" class="primary">Choose file</button>
+      </div>
+
+      <div id="reader" hidden>
+        <div class="toolbar">
+          <div class="title"><span id="fname"></span> <span id="stats" class="muted"></span></div>
+          <div class="tools">
+            <input id="search" type="search" placeholder="Find a word…" />
+            <label class="chk"><input id="showTimes" type="checkbox" checked /> Timestamps</label>
+            <label class="chk"><input id="hideSfx" type="checkbox" checked /> Hide sound effects</label>
+            <label class="chk">Size <input id="fontSize" type="range" min="14" max="28" value="18" /></label>
+            <button id="newFile">Upload another</button>
+          </div>
+        </div>
+        <p class="muted hintline">Click any word to see its meaning, pronunciation, usage and 10 example sentences. Select several words to look up a phrase.</p>
+        <article id="text"></article>
+      </div>
+    </section>
+
+    <!-- ============================== MY WORDS =============================== -->
+    <section id="tab-words" class="tabpane">
+      <div class="toolbar">
+        <div class="title">Saved words <span id="wordCount" class="muted"></span></div>
+        <div class="tools">
+          <button id="exportCsv">Export CSV</button>
+          <button id="clearWords" class="danger">Clear all</button>
+        </div>
+      </div>
+      <div id="wordsList"></div>
+    </section>
+
+    <!-- ============================== SETTINGS =============================== -->
+    <section id="tab-settings" class="tabpane">
+      <form id="settingsForm" class="card">
+        <h2>Word explanations</h2>
+        <label>Source
+          <select name="provider">
+            <option value="free">Free dictionary + example sentences (no key needed)</option>
+            <option value="gemini">Google Gemini (AI tutor – recommended, has a free tier)</option>
+            <option value="openai">OpenAI / OpenAI-compatible API (AI tutor)</option>
+          </select>
+        </label>
+        <p class="muted small">AI mode explains the exact meaning in the scene, when to use the word, pronunciation tips and always gives 10 example sentences.</p>
+
+        <fieldset data-for="gemini">
+          <legend>Gemini</legend>
+          <label>API key <input name="geminiKey" type="password" autocomplete="off" placeholder="AIza…" /></label>
+          <label>Model <input name="geminiModel" placeholder="gemini-2.0-flash" /></label>
+          <p class="muted small">Get a key at aistudio.google.com → “Get API key”.</p>
+        </fieldset>
+
+        <fieldset data-for="openai">
+          <legend>OpenAI-compatible</legend>
+          <label>API key <input name="openaiKey" type="password" autocomplete="off" placeholder="sk-…" /></label>
+          <label>Model <input name="openaiModel" placeholder="gpt-4o-mini" /></label>
+          <label>Base URL <input name="openaiBaseUrl" placeholder="https://api.openai.com/v1" /></label>
+          <p class="muted small">Works with OpenAI, OpenRouter, Groq, local Ollama (http://localhost:11434/v1) etc.</p>
+        </fieldset>
+
+        <label>Explain in language
+          <input name="explainLanguage" placeholder="English" list="langs" />
+          <datalist id="langs">
+            <option>English</option><option>Simple English</option><option>Hindi</option><option>Urdu</option>
+            <option>Bengali</option><option>Tamil</option><option>Arabic</option><option>Spanish</option>
+            <option>Portuguese</option><option>French</option><option>German</option><option>Turkish</option>
+            <option>Persian</option><option>Chinese</option><option>Japanese</option><option>Korean</option>
+            <option>Indonesian</option><option>Vietnamese</option><option>Russian</option>
+          </datalist>
+        </label>
+
+        <h2>Player</h2>
+        <label class="chk"><input name="pauseVideoOnPick" type="checkbox" /> Pause the video when I press Ctrl+Q</label>
+        <label>Voice speed <input name="voiceRate" type="range" min="0.5" max="1.3" step="0.05" /> <span id="rateVal"></span></label>
+        <div class="row">
+          <button type="submit" class="primary">Save settings</button>
+          <button type="button" id="testVoice">🔊 Test voice</button>
+          <button type="button" id="clearCache">Clear lookup cache</button>
+          <span id="saveMsg" class="ok"></span>
+        </div>
+      </form>
+    </section>
+
+    <!-- ================================ HELP ================================= -->
+    <section id="tab-help" class="tabpane">
+      <div class="card help">
+        <h2>🎬 While watching (Netflix, YouTube, Prime Video, Disney+, Max, Hulu, any HTML5 player)</h2>
+        <ol>
+          <li>Turn on subtitles in the player.</li>
+          <li>Press <kbd>Ctrl</kbd> + <kbd>Q</kbd>. The video pauses and <b>pick mode</b> starts.</li>
+          <li>Click any word in the subtitle on screen. You can also click a word in the copy of the subtitle line shown above the hint bar.</li>
+          <li>A panel opens with the meaning in the scene, the dictionary meanings, pronunciation (🔊 normal / 🐢 slow), when to use it, its meaning in different sentences and 10 example sentences.</li>
+          <li>Click more words, or click words inside the example sentences to look those up too. Press ☆ to save a word.</li>
+          <li>Press <kbd>Ctrl</kbd> + <kbd>Q</kbd> again (or <kbd>Esc</kbd>) to close it and resume the video.</li>
+        </ol>
+        <h2>📖 Deep Learning mode</h2>
+        <p>Click the extension icon to open this page. Upload a subtitle file and it turns into readable paragraphs. Click any word for its full explanation.</p>
+        <h2>Tips</h2>
+        <ul>
+          <li>Pin the extension: puzzle icon → pin <b>Subtitle Lens</b>.</li>
+          <li>If Ctrl+Q does nothing on a tab that was already open, reload the page once after installing.</li>
+          <li>For the best explanations, add a free Gemini key in Settings.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <script src="../shared/lookup-ui.js"></script>
+  <script src="subtitle-parser.js"></script>
+  <script src="learn.js"></script>
+</body>
+</html>
